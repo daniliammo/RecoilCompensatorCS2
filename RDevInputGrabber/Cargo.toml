@@ -1,0 +1,17 @@
+[package]
+name = "RDevInputGrabber"
+description = "Отслеживает нажатие клавиш в сервере X11 И XWayland и выводит их в stdout"
+version = "0.2.0"
+edition = "2021"
+
+[dependencies]
+rdev = "0.5.3"
+
+[profile.dev]
+opt-level = 2
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+strip = "symbols"
+panic = "abort"
