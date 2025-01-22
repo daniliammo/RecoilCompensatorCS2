@@ -4,10 +4,10 @@ public static class Timers
 {
 
     public static decimal SmokeTimerTime = 19;
-    public static decimal WeaponTimerTime = 0;
+    public static decimal WeaponTimerTime = 1;
     
-    public static Timer smokeTimer;
-    public static Timer weaponTimer;
+    public static Timer SmokeTimer;
+    public static Timer WeaponTimer;
 
     private const int Period = 100;
     
@@ -38,8 +38,8 @@ public static class Timers
         
         if (SmokeTimerTime == 0)
         {
-            smokeTimer.Dispose();
-            smokeTimer = null;
+            SmokeTimer.Dispose();
+            SmokeTimer = null;
         }
     }
     
@@ -50,23 +50,23 @@ public static class Timers
         
         if (WeaponTimerTime <= 0)
         {
-            weaponTimer.Dispose();
-            weaponTimer = null;
+            WeaponTimer.Dispose();
+            WeaponTimer = null;
         }
     }
     
     private static void StartSmokeTimer()
     {
-        if (smokeTimer == null)
+        if (SmokeTimer == null)
         {
-            smokeTimer = new Timer(SmokeTimerCallback, null, 0, Period);
+            SmokeTimer = new Timer(SmokeTimerCallback, null, 0, Period);
             return;
         }
 
-        if (smokeTimer != null)
+        if (SmokeTimer != null)
         {
-            smokeTimer.Dispose();
-            smokeTimer = null;
+            SmokeTimer.Dispose();
+            SmokeTimer = null;
             SmokeTimerTime = 19m;
             StartSmokeTimer();
         }
@@ -74,32 +74,41 @@ public static class Timers
 
     public static void Stop()
     {
-        if (smokeTimer != null)
-        {
-            smokeTimer.Dispose();
-            smokeTimer = null;
-        }
-        
-        if (weaponTimer != null)
-        {
-            weaponTimer.Dispose();
-            weaponTimer = null;
-        }
+        StopWeaponTimer();
+        StopSmokeTimer();
     }
 
+    public static void StopWeaponTimer()
+    {
+        if (WeaponTimer != null)
+        {
+            WeaponTimer.Dispose();
+            WeaponTimer = null;
+        }
+    }
+    
+    public static void StopSmokeTimer()
+    {
+        if (SmokeTimer != null)
+        {
+            SmokeTimer.Dispose();
+            SmokeTimer = null;
+        }
+    }
+    
     public static void StartWeaponTimer(decimal weaponTimerTime)
     {
-        if (weaponTimer == null)
+        if (WeaponTimer == null)
         {
             WeaponTimerTime = weaponTimerTime;
-            weaponTimer = new Timer(WeaponTimerCallback, null, 0, Period);
+            WeaponTimer = new Timer(WeaponTimerCallback, null, 0, Period);
             return;
         }
 
-        if (weaponTimer != null)
+        if (WeaponTimer != null)
         {
-            weaponTimer.Dispose();
-            weaponTimer = null;
+            WeaponTimer.Dispose();
+            WeaponTimer = null;
             WeaponTimerTime = weaponTimerTime;
             StartWeaponTimer(weaponTimerTime);
         }

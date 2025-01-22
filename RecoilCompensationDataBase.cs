@@ -1,164 +1,164 @@
 namespace RecoilCompensator;
 
-public static class RecoilCompensationDataBase
+public struct RecoilCompensationDataBase
 {
-    public static readonly Vector2[] Ak47CompensationData =
+    public static readonly Vector2Decimal[] Ak47CompensationData =
     [
-        new(-1.1f, 2.2f),
-        new(-1.1f, 2.2f),
-        new(-1.1f, 2.2f),
-        new(-1.1f, 2.2f),
+        new(-1.1m, 2.2m),
+        new(-1.1m, 2.2m),
+        new(-1.1m, 2.2m),
+        new(-1.1m, 2.2m),
         
-        new(1.1f, 4.4f),
-        new(1.1f, 4.4f),
-        new(1.1f, 4.4f),
-        new(1.1f, 4.4f),
+        new(1.1m, 4.4m),
+        new(1.1m, 4.4m),
+        new(1.1m, 4.4m),
+        new(1.1m, 4.4m),
         
-        new(1.1f, 7.7f),
+        new(1.1m, 7.7m),
         
-        new(0, 8.8f),
+        new(0, 8.8m),
         
-        new(0, 7.7f),
+        new(0, 7.7m),
         
-        new(0, 8.8f),
-        new(0, 8.8f),
-        new(0, 8.8f),
-        new(0, 8.8f),
-        new(0, 8.8f),
+        new(0, 8.8m),
+        new(0, 8.8m),
+        new(0, 8.8m),
+        new(0, 8.8m),
+        new(0, 8.8m),
         
-        new(2.2f, 7.7f),
-        new(2.2f, 7.7f),
-        new(2.2f, 7.7f),
-        new(2.2f, 7.7f),
-        new(2.2f, 7.7f),
-        new(2.2f, 7.7f),
-        new(2.2f, 7.7f),
-        new(2.2f, 7.7f),
+        new(2.2m, 7.7m),
+        new(2.2m, 7.7m),
+        new(2.2m, 7.7m),
+        new(2.2m, 7.7m),
+        new(2.2m, 7.7m),
+        new(2.2m, 7.7m),
+        new(2.2m, 7.7m),
+        new(2.2m, 7.7m),
         
-        new(3.3f, 6.6f),
-        new(3.3f, 6.6f),
-        new(3.3f, 6.6f),
-        new(3.3f, 6.6f),
+        new(3.3m, 6.6m),
+        new(3.3m, 6.6m),
+        new(3.3m, 6.6m),
+        new(3.3m, 6.6m),
         
-        new(-4.4f, 4.4f),
-        new(-4.4f, 4.4f),
-        new(-4.4f, 4.4f),
-        new(-4.4f, 4.4f),
+        new(-4.4m, 4.4m),
+        new(-4.4m, 4.4m),
+        new(-4.4m, 4.4m),
+        new(-4.4m, 4.4m),
         
-        new(-8.8f, -1.1f),
+        new(-8.8m, -1.1m),
         
-        new(-9.9f, -1.1f),
-        new(-9.9f, -1.1f),
+        new(-9.9m, -1.1m),
+        new(-9.9m, -1.1m),
         
-        new(-8.8f, -1.1f),
+        new(-8.8m, -1.1m),
         
-        new(-6.6f, 1.1f),
-        new(-6.6f, 1.1f),
-        new(-6.6f, 1.1f),
-        new(-6.6f, 1.1f),
+        new(-6.6m, 1.1m),
+        new(-6.6m, 1.1m),
+        new(-6.6m, 1.1m),
+        new(-6.6m, 1.1m),
         
-        new(3.3f, 2.2f),
+        new(3.3m, 2.2m),
         
-        new(4.4f, 2.2f),
-        new(4.4f, 2.2f),
+        new(4.4m, 2.2m),
+        new(4.4m, 2.2m),
         
-        new(3.3f, 2.2f),
+        new(3.3m, 2.2m),
         
-        new(-3.3f, 1.1f),
-        new(-3.3f, 1.1f),
-        new(-3.3f, 1.1f),
-        new(-3.3f, 1.1f),
+        new(-3.3m, 1.1m),
+        new(-3.3m, 1.1m),
+        new(-3.3m, 1.1m),
+        new(-3.3m, 1.1m),
         
-        new(-7.7f, -2.2f),
-        new(-7.7f, -2.2f),
-        new(-7.7f, -2.2f),
-        new(-7.7f, -2.2f),
+        new(-7.7m, -2.2m),
+        new(-7.7m, -2.2m),
+        new(-7.7m, -2.2m),
+        new(-7.7m, -2.2m),
         
-        new(-1.1f, 1.1f),
+        new(-1.1m, 1.1m),
         
-        new(0, 1.1f),
-        new(0, 1.1f),
-        new(0, 1.1f),
+        new(0, 1.1m),
+        new(0, 1.1m),
+        new(0, 1.1m),
         
-        new(9.9f, 1.1f),
+        new(9.9m, 1.1m),
         
-        new(11, 2.2f),
-        new(11, 2.2f),
+        new(11, 2.2m),
+        new(11, 2.2m),
         
-        new(9.9f, 1.1f),
+        new(9.9m, 1.1m),
         
-        new(5.5f, 1.1f),
+        new(5.5m, 1.1m),
         
-        new(5.5f, 2.2f),
+        new(5.5m, 2.2m),
         
-        new(5.5f, 1.1f),
+        new(5.5m, 1.1m),
         
-        new(5.5f, 2.2f),
+        new(5.5m, 2.2m),
         
-        new(3.3f, 1.1f),
-        new(3.3f, 1.1f),
-        new(3.3f, 1.1f),
-        new(3.3f, 1.1f),
+        new(3.3m, 1.1m),
+        new(3.3m, 1.1m),
+        new(3.3m, 1.1m),
+        new(3.3m, 1.1m),
         
-        new(7.7f, -1.1f),
-        new(7.7f, -1.1f),
-        new(7.7f, -1.1f),
-        new(7.7f, -1.1f),
+        new(7.7m, -1.1m),
+        new(7.7m, -1.1m),
+        new(7.7m, -1.1m),
+        new(7.7m, -1.1m),
         
-        new(8.8f, -1.1f),
-        new(8.8f, -1.1f),
-        new(8.8f, -1.1f),
-        new(8.8f, -1.1f),
+        new(8.8m, -1.1m),
+        new(8.8m, -1.1m),
+        new(8.8m, -1.1m),
+        new(8.8m, -1.1m),
         
-        new(0f, 0f),
-        new(0f, 0f),
-        new(0f, 0f),
+        new(0m, 0m),
+        new(0m, 0m),
+        new(0m, 0m),
         
-        new(-20.9f, 0f),
+        new(-20.9m, 0m),
         
-        new(1.1f, 0f),
-        new(1.1f, 0f),
-        new(1.1f, 0f),
-        new(1.1f, 0f),
+        new(1.1m, 0m),
+        new(1.1m, 0m),
+        new(1.1m, 0m),
+        new(1.1m, 0m),
         
-        new(-2.2f, 0f),
-        new(-2.2f, 0f),
-        new(-2.2f, 0f),
-        new(-2.2f, 0f),
-        new(-2.2f, 0f),
-        new(-2.2f, 0f),
-        new(-2.2f, 0f),
-        new(-2.2f, 0f),
+        new(-2.2m, 0m),
+        new(-2.2m, 0m),
+        new(-2.2m, 0m),
+        new(-2.2m, 0m),
+        new(-2.2m, 0m),
+        new(-2.2m, 0m),
+        new(-2.2m, 0m),
+        new(-2.2m, 0m),
         
-        new(5.5f, 0f),
-        new(5.5f, 0f),
-        new(5.5f, 0f),
-        new(5.5f, 0f),
+        new(5.5m, 0m),
+        new(5.5m, 0m),
+        new(5.5m, 0m),
+        new(5.5m, 0m),
         
-        new(2.2f, 0f),
-        new(2.2f, 0f),
-        new(2.2f, 0f),
-        new(2.2f, 0f),
+        new(2.2m, 0m),
+        new(2.2m, 0m),
+        new(2.2m, 0m),
+        new(2.2m, 0m),
         
-        new(-5.5f, 0f),
-        new(-5.5f, 0f),
-        new(-5.5f, 0f),
-        new(-5.5f, 0f),
+        new(-5.5m, 0m),
+        new(-5.5m, 0m),
+        new(-5.5m, 0m),
+        new(-5.5m, 0m),
         
-        new(-8.8f, 0f),
-        new(-8.8f, 0f),
-        new(-8.8f, 0f),
-        new(-8.8f, 0f),
+        new(-8.8m, 0m),
+        new(-8.8m, 0m),
+        new(-8.8m, 0m),
+        new(-8.8m, 0m),
         
-        new(-13.2f, -5.5f),
-        new(-13.2f, -5.5f),
-        new(-13.2f, -5.5f),
-        new(-13.2f, -5.5f),
+        new(-13.2m, -5.5m),
+        new(-13.2m, -5.5m),
+        new(-13.2m, -5.5m),
+        new(-13.2m, -5.5m),
         
-        new(-4.4f, 0),
-        new(-4.4f, 0),
-        new(-4.4f, 0),
-        new(-4.4f, 0)
+        new(-4.4m, 0),
+        new(-4.4m, 0),
+        new(-4.4m, 0),
+        new(-4.4m, 0)
     ];
 
     public const float Ak47Sleep = 0.0233f;
@@ -173,10 +173,10 @@ public static class RecoilCompensationDataBase
     {
         // Временно. Моя сенса = 2.52 (макс. dpi на мышке). Возвращение к обычным значениям. Под сенсу 1. 
         for (var i = 0; i < Ak47CompensationData.Length; i++)
-            Ak47CompensationData[i] /= 2.52f;
+            Ak47CompensationData[i] /= 2.52m;
         
         for (var i = 0; i < Ak47CompensationData.Length; i++)
-            Ak47CompensationData[i] *= Config.Sensitivity;
+            Ak47CompensationData[i] *= (decimal)Config.Sensitivity;
     }
     
 }

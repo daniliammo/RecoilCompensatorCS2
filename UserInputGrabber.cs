@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using GLib;
 using Process = System.Diagnostics.Process;
 using Thread = System.Threading.Thread;
 
@@ -23,18 +24,12 @@ public static class UserInputGrabber
     
     public delegate void OnKeyRelease(Keys button);
     public static event OnKeyRelease KeyReleased;
-    
-    private static bool _isStopRequested;
-    
+
     private static Process _process;
     
 
     public static void Start()
     {
-        var updateThread = new Thread(() => Update(1/15f));
-        updateThread.Name = "(User Input Grabber): Update Thread";
-        updateThread.Start();
-        
         var startInputGrabberProcess = new Thread(StartInputGrabberProcess);
         startInputGrabberProcess.Name = "(User Input Grabber): Start Input Grabber Process Thread";
         startInputGrabberProcess.Start();
@@ -63,7 +58,7 @@ public static class UserInputGrabber
     {
         using (var reader = new StreamReader(_process.StandardOutput.BaseStream, Encoding.UTF8))
         {
-            while (!_process.HasExited && !reader.EndOfStream && !_isStopRequested)
+            while (!_process.HasExited && !reader.EndOfStream)
             {
                 var line = reader.ReadLine();
                 
@@ -71,9 +66,6 @@ public static class UserInputGrabber
                     Console.WriteLine($"RDev: {line}");
                 CheckLine(line);
             }
-            
-            if(!_isStopRequested && _process.ExitCode != 0)
-                throw new Exception($"RDev exited with non-zero exit code: {_process.ExitCode}");
         }
         _process.WaitForExit();
     }
@@ -168,6 +160,12 @@ public static class UserInputGrabber
             case "al":
                 KeyPressed?.Invoke(Keys.AltGr);
                 return;
+            case "at":
+                KeyReleased?.Invoke(Keys.Alt);
+                return;
+            case "lc":
+                KeyPressed?.Invoke(Keys.LeftControl);
+                return;
             case "rc":
                 KeyPressed?.Invoke(Keys.RightControl);
                 return;
@@ -249,22 +247,25 @@ public static class UserInputGrabber
             case "alr":
                 KeyReleased?.Invoke(Keys.AltGr);
                 return;
+            case "atr":
+                KeyReleased?.Invoke(Keys.Alt);
+                return;
+            case "lcr":
+                KeyReleased?.Invoke(Keys.LeftControl);
+                return;
             case "rcr":
                 KeyReleased?.Invoke(Keys.RightControl);
                 return;
-        }
-    }
-    
-    private static void Update(float delta)
-    {
-        while (_isStopRequested == false)
-        {
-            Thread.Sleep((int)(delta * 1000));
+            
+            default:
+                Console.WriteLine($"(UserInputGrabber): received unknown line from RDev: line='{line}'. Stop.");
+                WindowController.Stop();
+                return;
         }
     }
 
     public static void Stop()
     {
-        _isStopRequested = true;
+        _process.Kill();
     }
 }

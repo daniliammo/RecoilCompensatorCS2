@@ -3,7 +3,7 @@ namespace RecoilCompensator;
 
 public static class RecoilCompensation
 {
-    public static Slot[] Slots = new Slot[5];
+    public static Slot[] Slots = new Slot[3];
 
     public static Mode CurrentMode = Config.StartMode;
     
@@ -12,13 +12,15 @@ public static class RecoilCompensation
 
     public static int CurrentSlot;
 
-    private static Weapon CurrentWeapon => Slots[CurrentSlot].Weapon;
+    public static Weapon CurrentWeapon => Slots[CurrentSlot].Weapon;
 
     private static bool _w;
     private static bool _a;
     private static bool _s;
     private static bool _d;
 
+    public static bool IsRealSlotUnknown;
+    
 
     public static void Start()
     {
@@ -61,6 +63,8 @@ public static class RecoilCompensation
         {
             if (key == Keys.F1)
             {
+                Slots[0].Weapon.AbortPrepare();
+                
                 Slots[0].Weapon = new Weapon(WeaponType.Ak47);
                 ChangeSlot(0);
                 return;
@@ -68,6 +72,8 @@ public static class RecoilCompensation
             
             if (key == Keys.F2)
             {
+                Slots[0].Weapon.AbortPrepare();
+                
                 Slots[0].Weapon = new Weapon(WeaponType.M4A4);
                 ChangeSlot(0);
                 return;
@@ -75,6 +81,8 @@ public static class RecoilCompensation
 
             if (key == Keys.F3)
             {
+                Slots[0].Weapon.AbortPrepare();
+                
                 Slots[0].Weapon = new Weapon(WeaponType.M4A1S);
                 ChangeSlot(0);
                 return;
@@ -223,15 +231,25 @@ public static class RecoilCompensation
         if (key == Keys.Key5)
         {
             ChangeSlot(4, false);
-            VirtualInput.MouseMove(new Vector2(0, 15));
             return;
         }
     }
-
-    public static bool IsRealSlotUnknown;
     
     private static void ChangeSlot(int slot, bool pressKey = true, bool fromWheel = false)
     {
+        if (slot > Slots.Length - 1)
+        {
+            IsRealSlotUnknown = true;
+            WindowController.QueueRedraw();
+            return;
+        }
+
+        if (slot != CurrentSlot)
+        {
+            CurrentWeapon.AbortPrepare(); // Прежнее оружие не готово.
+            Slots[slot].Weapon.Prepare(); // Начать подготовку нового оружия.
+        }
+        
         /*
         from /usr/include/linux/input-event-codes.h
         #define KEY_ESC                 1
@@ -239,21 +257,8 @@ public static class RecoilCompensation
         #define KEY_2                   3
         #define KEY_3                   4
         .....
-        1 это Escape. 2 это Key_1. Поэтому прибавляем 2 к переменной slot.
-        */ 
-        
-        if (slot > Slots.Length) return;
-        
-        if (slot == 0 && CurrentSlot == 0 && fromWheel)
-            IsRealSlotUnknown = true;
-
-        if (slot != CurrentSlot)
-        {
-            CurrentWeapon.IsReady = false; // Прежнее оружие не готово.
-            Slots[slot].Weapon.Prepare(); // Начать подготовку нового оружия.
-        }
-
-        CurrentSlot = slot;
+        1 это Escape. 2 это Key_1. Так как отчет слотов начинаеться с 0 прибавляем 2.
+        */
         
         if (pressKey)
             VirtualInput.PressKey(slot + 2);
@@ -264,7 +269,7 @@ public static class RecoilCompensation
         if (!fromWheel)
             IsRealSlotUnknown = false;
         
-        Timers.StartWeaponTimer(CurrentWeapon.PreparationTime);
+        CurrentSlot = slot;
         
         WindowController.QueueRedraw();
     }
@@ -364,9 +369,6 @@ public static class RecoilCompensation
         
         if (CurrentSlot == 1)
             VirtualInput.PressKeyWithDelay(key, 95);
-        
-        if (CurrentSlot is 2 or 3 or 4)
-            return;
     }
     
     private static void RestartRound()
@@ -385,7 +387,11 @@ public static class RecoilCompensation
         if (isUp)
         {
             if (CurrentSlot == 0)
+            {
+                IsRealSlotUnknown = true;
                 return;
+            }
+
             ChangeSlot(CurrentSlot - 1, false, true);
             return;
         }
@@ -394,8 +400,6 @@ public static class RecoilCompensation
             return;
         ChangeSlot(CurrentSlot + 1, false, true);
     }
-
-    private static bool _plannedShot;
     
     private static void OnButtonPressed(Keys button)
     {
@@ -414,8 +418,6 @@ public static class RecoilCompensation
     private static void OnButtonReleased(Keys button)
     {
         if (IsPaused) return;
-
-        Console.WriteLine(button);
         
         if (button == Keys.LeftMouse)
             CurrentWeapon.StopRecoilCompensation();
@@ -427,9 +429,9 @@ public static class RecoilCompensation
         Slots[1] = new Slot(WeaponSlotType.Pistol, new Weapon(WeaponType.Usp));
         Slots[2] = new Slot(WeaponSlotType.Knife, new Weapon(WeaponType.Knife));
         
-        // Слоты пустышки. Программа не знает точно есть ли эти слоты у игрока.
-        Slots[3] = new Slot(WeaponSlotType.Grenade, new Weapon(WeaponType.Unknown));
-        Slots[4] = new Slot(WeaponSlotType.C4, new Weapon(WeaponType.Unknown));
+        // // Слоты пустышки. Программа не знает точно есть ли эти слоты у игрока.
+        // Slots[3] = new Slot(WeaponSlotType.Grenade, new Weapon(WeaponType.Knife));
+        // Slots[4] = new Slot(WeaponSlotType.C4, new Weapon(WeaponType.Knife));
     }
     
     public static void Stop()

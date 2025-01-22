@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace RecoilCompensator;
 
 
@@ -11,7 +13,7 @@ public class Weapon()
     public int Magazine;
     public readonly int MaxMagazine;
     public decimal PreparationTime;
-    public float ReloadTime;
+    public decimal ReloadTime;
     public float FireRate;
     
     public delegate void OnReady();
@@ -19,6 +21,9 @@ public class Weapon()
     
     public bool IsReady;
     public bool IsSilent = false;
+    
+    private bool _isRecoilCompensationNeeded;
+    private bool _abortingPrepare;
     
     
     public Weapon(WeaponType weaponType) : this()
@@ -32,7 +37,7 @@ public class Weapon()
                 MaxMagazine = 90;
                 Magazine = MaxMagazine;
                 PreparationTime = 1m;
-                ReloadTime = 2.5f;
+                ReloadTime = 1.43m;
                 FireRate = 0.01f;
                 CurrentAmmo = MaxAmmo;
                 break;
@@ -41,7 +46,7 @@ public class Weapon()
                 MaxMagazine = 90;
                 Magazine = MaxMagazine;
                 PreparationTime = 0.5m;
-                ReloadTime = 3.1f;
+                ReloadTime = 3.1m;
                 FireRate = 0.0111f;
                 CurrentAmmo = MaxAmmo;
                 break;
@@ -51,7 +56,7 @@ public class Weapon()
                 Magazine = MaxMagazine;
                 IsSilent = true;
                 PreparationTime = 0.5m;
-                ReloadTime = 3.1f;
+                ReloadTime = 3.1m;
                 FireRate = 0.01f;
                 CurrentAmmo = MaxAmmo;
                 break;
@@ -69,12 +74,19 @@ public class Weapon()
                 MaxMagazine = 90;
                 Magazine = MaxMagazine;
                 PreparationTime = 0.5m;
-                ReloadTime = 3.3f;
+                ReloadTime = 3.3m;
                 FireRate = 0.0111f;
             
                 CurrentAmmo = MaxAmmo;
                 break;
             case WeaponType.Usp:
+                MaxAmmo = 12;
+                MaxMagazine = 24;
+                Magazine = MaxMagazine;
+                PreparationTime = 0.5m;
+                ReloadTime = 2.1m;
+                FireRate = 0.1f;
+                CurrentAmmo = MaxAmmo;
                 break;
             case WeaponType.FiveSeven:
                 break;
@@ -83,7 +95,7 @@ public class Weapon()
                 MaxMagazine = 120;
                 Magazine = MaxMagazine;
                 PreparationTime = 0.5m;
-                ReloadTime = 2.1f;
+                ReloadTime = 2.1m;
                 FireRate = 0.014283333f;
                 CurrentAmmo = MaxAmmo;
                 break;
@@ -92,7 +104,7 @@ public class Weapon()
                 MaxMagazine = 120;
                 Magazine = MaxMagazine;
                 PreparationTime = 0.5m;
-                ReloadTime = 3.1f;
+                ReloadTime = 3.1m;
                 FireRate = 0.013333333f;
                 CurrentAmmo = MaxAmmo;
                 break;
@@ -109,18 +121,15 @@ public class Weapon()
                 MaxAmmo = 0;
                 MaxMagazine = 0;
                 Magazine = MaxMagazine;
-                PreparationTime = 0;
-                ReloadTime = 0;
+                PreparationTime = 5.2m;
+                ReloadTime = 1.2m;
                 FireRate = 0;
                 CurrentAmmo = MaxAmmo;
                 break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            case WeaponType.Mac10:
+                break;
         }
-        Prepare();
     }
-
-    private bool _isRecoilCompensationNeeded;
 
     public void StartRecoilCompensation()
     {
@@ -133,13 +142,28 @@ public class Weapon()
         
         if (WeaponType == WeaponType.Ak47)
         {
+            var flag = true;
+            
             foreach (var vector2 in RecoilCompensationDataBase.Ak47CompensationData)
             {
                 if(!_isRecoilCompensationNeeded && IsReady)
                     return;
                 
-                Thread.Sleep((int)(RecoilCompensationDataBase.Ak47Sleep * 1000));
+                if (flag)
+                {
+                    Thread.Sleep(TimeSpan.FromSeconds(RecoilCompensationDataBase.Ak47Sleep));
+                    flag = false;
+                }
+
+                // Создание и запуск таймера
+                // var stopwatch = Stopwatch.StartNew();
                 VirtualInput.MouseMove(vector2);
+                // Остановка таймера
+                // stopwatch.Stop();
+
+                // Console.WriteLine(stopwatch.Elapsed.Nanoseconds);
+                
+                Thread.Sleep(TimeSpan.FromSeconds(RecoilCompensationDataBase.Ak47Sleep));
             }
             return;
         }
@@ -150,12 +174,12 @@ public class Weapon()
         _isRecoilCompensationNeeded = false;
     }
     
-    private bool _abortingPrepare;
-    
     public void AbortPrepare()
     {
         IsReady = false;
         _abortingPrepare = true;
+        Timers.StopWeaponTimer();
+        AbortReload();
     }
 
     public void AbortReload()
@@ -166,6 +190,7 @@ public class Weapon()
     public void Prepare()
     {
         new Thread(PrepareInternal).Start();
+        Timers.StartWeaponTimer(this.PreparationTime);
     }
 
     private void PrepareInternal()
@@ -183,15 +208,18 @@ public class Weapon()
         
         IsReady = true;
         WeaponReady?.Invoke();
-        Console.WriteLine($"Weapon {WeaponType} is ready");
+        
+        if (Config.DebugMode)
+            Console.WriteLine($"Weapon {WeaponType} is ready");
     }
 
     private bool _abortingReload;
     
     public void Reload()
     {
+        AbortPrepare();
         new Thread(ReloadInternal).Start();
-        
+        Timers.StartWeaponTimer(this.ReloadTime);
     }
 
     private void ReloadInternal()
@@ -203,8 +231,8 @@ public class Weapon()
                 _abortingReload = false;
                 return;
             }
-
-            Thread.Sleep(TimeSpan.FromSeconds(ReloadTime / 25));
+            
+            Thread.Sleep(TimeSpan.FromSeconds((float)ReloadTime / 25));
         }
 
 
@@ -218,6 +246,9 @@ public class Weapon()
         
         Magazine -= diff;
         CurrentAmmo = MaxAmmo;
+        
+        WindowController.QueueRedraw();
+        Prepare();
     }
     
     // Called on new round start

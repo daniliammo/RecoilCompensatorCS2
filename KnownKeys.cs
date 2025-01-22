@@ -1,6 +1,6 @@
 namespace RecoilCompensator;
 
-public static class KeysDataBase
+public struct KeysDataBase
 {
     // from /usr/include/linux/input-event-codes.h
     public const int KeyW = 17;
@@ -39,6 +39,8 @@ public enum Keys
     Space,
     R,
     // Other
+    Alt,
     AltGr,
-    RightControl
+    RightControl,
+    LeftControl
 }

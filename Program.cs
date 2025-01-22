@@ -35,7 +35,6 @@ public static class WindowController
         // Настройка параметров окна
         _window.AppPaintable = true;
         
-        // window.ScreenChanged += ScreenChanged;
         _window.Drawn += ExposeDraw;
         
         _window.ButtonPressEvent += Clicked;
@@ -44,20 +43,18 @@ public static class WindowController
         _window.KeyPressEvent += KeyPressed;
         
         _window.ShowAll();
+        
         Application.Run();
+    }
+
+    public static void Stop()
+    {
+        _window.Close(); // This invokes _window.DeleteEvent
     }
     
     public static void QueueRedraw()
     {
         _window?.QueueDraw();
-    }
-    
-    private static void ScreenChanged(object o, ScreenChangedArgs args)
-    {
-        _widget = o as Widget;
-        var screen = _widget.Window.Screen;
-
-        // _widget.Visual = screen.SystemVisual;
     }
 
     private static void ExposeDraw(object sender, DrawnArgs args)
@@ -86,8 +83,14 @@ public static class WindowController
         DrawIsPaused();
         DrawSmokeTimer();
         DrawCurrentWeaponTimer();
+        DrawCurrentWeaponAmmo();
     }
 
+    private static void DrawCurrentWeaponAmmo()
+    {
+        DrawText($"{RecoilCompensation.CurrentWeapon.CurrentAmmo}/{RecoilCompensation.CurrentWeapon.Magazine}", new Vector2Int(100, 100), new Color(255, 255, 255));
+    }
+    
     private static void DrawSmokeTimer()
     {
         var color = new Color(0, 255, 0);
@@ -118,13 +121,23 @@ public static class WindowController
 
     private static void DrawCurrentWeaponTimer()
     {
-        DrawText(Timers.WeaponTimerTime.ToString(CultureInfo.CurrentCulture), new Vector2Int(150, 100), new Color(255, 0, 255));
+        var text = Timers.WeaponTimerTime.ToString(CultureInfo.CurrentCulture);
+        
+        var color = new Color(255, 0, 0);
+        
+        if (Timers.WeaponTimerTime == 0)
+        {
+            text = "ГОТОВ";
+            color = new Color(0, 255, 0);
+        }
+
+        DrawText(text, new Vector2Int(150, 100), color);
     }
     
     private static void DrawCurrentSlot()
     {
         // +1 потому что счет начинается с нуля. Что бы пользователь не запутался в слотах.
-        var text = (RecoilCompensation.CurrentSlot + 1).ToString(CultureInfo.CurrentCulture);
+        var text = $"{RecoilCompensation.CurrentSlot + 1} ({RecoilCompensation.CurrentWeapon.WeaponType})";
         var color = new Color(0, 255, 0);
         
         if (RecoilCompensation.IsRealSlotUnknown)

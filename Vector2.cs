@@ -1,7 +1,7 @@
 namespace RecoilCompensator;
 
 
-public class Vector2(float x, float y)
+public struct Vector2(float x, float y)
 {
     
     public float X = x;

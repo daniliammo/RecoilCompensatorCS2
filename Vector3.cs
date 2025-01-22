@@ -1,6 +1,8 @@
 namespace RecoilCompensator;
 
-public class Vector3(float x, float y, float z) : Vector2(x, y)
+public struct Vector3(float x, float y, float z)
 {
+    public float X = x;
+    public float Y = y;
     public float Z = z;
 }
