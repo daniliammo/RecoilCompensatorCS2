@@ -10,6 +10,8 @@ public struct Config
     public static readonly Vector2Int CenterOffset = new(0, -32);
 
     public const byte FontSize = 32;
+    public static readonly Color FontOutlineColor = new(0, 0, 0);
+    public const byte FontOutlineSize = 8;
 
     public const Mode StartMode = Mode.Mode0;
 

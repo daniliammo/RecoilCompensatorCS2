@@ -183,15 +183,30 @@ public static class WindowController
     private static void DrawText(string text, Vector2Int position, Color color)
     {
         _context.NewPath();
-        // Установить шрифт и размер
-        _context.SetFontSize(Config.FontSize); // Размер шрифта 
-        _context.MoveTo(position.X, position.Y); // Позиция для текста
+
+        _context.SetFontSize(Config.FontSize); 
+
+        // Установить черный цвет для обводки
+        _context.SetSourceColor(Config.FontOutlineColor);
     
-        // Получить ширину текста для центрирования
+        // Получить ширину и высоту текста
         var textExtents = _context.TextExtents(text);
-        _context.MoveTo(position.X - textExtents.Width + 50, position.Y + textExtents.Height - 50); // Вертикально центрируем текст
         
+        // Нарисовать текст в черном цвете с небольшими смещениями
+        for (var x = -1; x <= 1; x++)
+        {
+            for (var y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0) continue; // Не рисуем в центре
+                _context.MoveTo(position.X + x, position.Y + y);
+                _context.ShowText(text);
+            }
+        }
+    
+        // Теперь нарисуем текст нужного цвета поверх
         _context.SetSourceColor(color);
+        // Вертикально центрируем текст
+        _context.MoveTo(position.X + textExtents.Height / Config.FontOutlineSize, position.Y + textExtents.Height / Config.FontOutlineSize);
         _context.ShowText(text); // Отрисовать текст
     }
 
