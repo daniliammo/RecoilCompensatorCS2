@@ -95,6 +95,9 @@ public static class UserInputGrabber
                 KeyPressed?.Invoke(Keys.Escape);
                 return;
             // Keys
+            case "q":
+                KeyPressed?.Invoke(Keys.Q);
+                return;
             // Reload
             case "r":
                 KeyPressed?.Invoke(Keys.R);
@@ -183,6 +186,9 @@ public static class UserInputGrabber
                 return;
             // Keys
             // Reload
+            case "qr":
+                KeyReleased?.Invoke(Keys.Q);
+                return;
             case "rr":
                 KeyReleased?.Invoke(Keys.R);
                 return;

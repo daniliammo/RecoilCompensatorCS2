@@ -51,6 +51,12 @@ fn callback(event: Event) {
                 return;
             }
 
+            // Drop C4 Bind
+            if key == Key::KeyQ {
+                println!("q");
+                return;
+            }
+            
             // Reload
             if key == Key::KeyR {
                 println!("r");
@@ -162,6 +168,12 @@ fn callback(event: Event) {
                 return;
             }
 
+            // Drop C4 Bind
+            if key == Key::KeyQ {
+                println!("qr");
+                return;
+            }
+            
             // Reload
             if key == Key::KeyR {
                 println!("rr");

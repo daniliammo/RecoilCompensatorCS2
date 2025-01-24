@@ -37,6 +37,7 @@ public enum Keys
     S,
     D,
     Space,
+    Q,
     R,
     // Other
     Alt,
