@@ -163,6 +163,21 @@ public static class RecoilCompensation
         
         if (key == Keys.F7)
             CurrentMode = Mode.Mode2;
+        if (key == Config.DropC4Bind)
+        {
+            var oldSlot = CurrentSlot;
+            //                    slot 4
+            VirtualInput.PressKey(4 + 2);
+            VirtualInput.PressKey(KeysDataBase.KeyG); // Выбрасываем бомбу. По умолчанию сброс оружия на G.
+            
+            if (IsRealSlotUnknown)
+                ChangeSlot(1); // слот неизвестен. переключаем на пистолет.
+            
+            if (!IsRealSlotUnknown)
+                ChangeSlot(oldSlot); // слот известен. возвращаем старый слот.
+            
+            return;
+        }
         
         // Сброс
         if (key == Keys.F8)

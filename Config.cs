@@ -22,6 +22,7 @@ public struct Config
     public const float Sensitivity = 2.52f;
 
     public const Keys Rotate180 = Keys.Alt;
+    public static Keys DropC4Bind = Keys.Q;
     // public const int OriginalDpi = 8000;
     // public const int UserDpi = 800;
     

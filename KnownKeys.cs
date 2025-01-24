@@ -7,6 +7,8 @@ public struct KeysDataBase
     public const int KeyA = 30;
     public const int KeyS = 31;
     public const int KeyD = 32;
+    
+    public const int KeyG = 34;
 }
 
 public enum Keys
