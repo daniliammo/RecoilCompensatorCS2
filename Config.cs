@@ -4,7 +4,7 @@ namespace RecoilCompensator;
 
 public struct Config
 {
-    public static readonly Color CrosshairColor = new(0, 255, 127); // rgb(0, 255, 127)
+    public static readonly Color CrosshairColor = new(0, 255, 0); // rgb(0, 255, 127)
     public const bool DrawCrosshair = true;
 
     public static readonly Vector2Int CenterOffset = new(0, -32);
