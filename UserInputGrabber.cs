@@ -164,7 +164,7 @@ public static class UserInputGrabber
                 KeyPressed?.Invoke(Keys.AltGr);
                 return;
             case "at":
-                KeyReleased?.Invoke(Keys.Alt);
+                KeyPressed?.Invoke(Keys.Alt);
                 return;
             case "lc":
                 KeyPressed?.Invoke(Keys.LeftControl);
