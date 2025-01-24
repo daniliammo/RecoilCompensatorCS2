@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sleep 3
 
 ydotool click 0xc0 -D 2950 & 
