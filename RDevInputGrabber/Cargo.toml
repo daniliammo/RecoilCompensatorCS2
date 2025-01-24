@@ -1,6 +1,6 @@
 [package]
 name = "RDevInputGrabber"
-description = "Отслеживает нажатие клавиш в сервере X11 И XWayland и выводит их в stdout"
+description = "Отслеживает нажатие клавиш в сервере X11 И XWayland и выводит их в stdout."
 version = "0.2.0"
 edition = "2021"
 
