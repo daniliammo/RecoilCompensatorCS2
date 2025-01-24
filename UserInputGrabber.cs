@@ -50,7 +50,9 @@ public static class UserInputGrabber
         ArgumentNullException.ThrowIfNull(_process);
         
         // Читаем вывод асинхронно
-        new Thread(ReadOutput).Start();
+        var startInputGrabberProcess = new Thread(ReadOutput);
+        startInputGrabberProcess.Name = "(User Input Grabber): Read STDOUT from RDev Input Grabber Thread";
+        startInputGrabberProcess.Start();
     }
     
     private static void ReadOutput()

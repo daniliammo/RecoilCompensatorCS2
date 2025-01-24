@@ -19,8 +19,13 @@ public static class WindowController
     
     private static void Main()
     {
-        RecoilCompensation.Start();
+        new Thread(RecoilCompensation.Start).Start();
         
+        new Thread(StartApplication).Start();
+    }
+
+    private static void StartApplication()
+    {
         Application.Init();
         
         // Создаем окно с заголовком
@@ -46,7 +51,7 @@ public static class WindowController
         
         Application.Run();
     }
-
+    
     public static void Stop()
     {
         _window.Close(); // This invokes _window.DeleteEvent
