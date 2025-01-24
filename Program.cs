@@ -153,11 +153,13 @@ public static class WindowController
     {
         _context.SetSourceColor(Config.CrosshairColor);
 
-        var crossHairPosition = new Vector2Int(_widget.Window.Width / 2, _widget.Window.Height / 2);
-        crossHairPosition.X += Config.CenterOffset.X;
-        crossHairPosition.Y += Config.CenterOffset.Y;
+        const int w = 10;
+        const int h = 10;
         
-        DrawBox(new Rectangle(crossHairPosition.X, crossHairPosition.Y, 10, 10), Config.CrosshairColor);
+        var crossHairPosition = new Vector2Int(_widget.Window.Width - w / 2, _widget.Window.Height - h / 2) / 2f;
+        crossHairPosition += Config.CenterOffset;
+        
+        DrawBox(new Rectangle(crossHairPosition.X, crossHairPosition.Y, w, h), Config.CrosshairColor);
     }
     
     private static void DrawScreenBounds()
