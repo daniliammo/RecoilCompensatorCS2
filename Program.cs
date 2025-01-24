@@ -214,7 +214,6 @@ public static class WindowController
         _context.MoveTo(position.X + textExtents.Height / Config.FontOutlineSize, position.Y + textExtents.Height / Config.FontOutlineSize);
         _context.ShowText(text); // Отрисовать текст
     }
-
     
     private static void DrawBox(Rectangle bounds, Color color)
     {
