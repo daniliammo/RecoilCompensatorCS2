@@ -2,6 +2,8 @@ namespace RecoilCompensator;
 
 public struct RecoilCompensationDataBase
 {
+    
+    #region AK47 Recoil compensation data
     public static readonly Vector2Decimal[] Ak47CompensationData =
     [
         new(-1.1m, 2.2m),
@@ -160,10 +162,11 @@ public struct RecoilCompensationDataBase
         new(-4.4m, 0),
         new(-4.4m, 0)
     ];
-
     public const float Ak47Sleep = 0.0233f;
+    #endregion
 
 
+    #region Methods
     public static void RewriteDataBaseForCurrentSensitivity()
     {
         new Thread(RewriteDataBaseForCurrentSensitivityInternal).Start();
@@ -171,12 +174,15 @@ public struct RecoilCompensationDataBase
 
     private static void RewriteDataBaseForCurrentSensitivityInternal()
     {
+        #region AK47
         // Временно. Моя сенса = 2.52 (макс. dpi на мышке). Возвращение к обычным значениям. Под сенсу 1. 
         for (var i = 0; i < Ak47CompensationData.Length; i++)
             Ak47CompensationData[i] /= 2.52m;
         
         for (var i = 0; i < Ak47CompensationData.Length; i++)
             Ak47CompensationData[i] *= (decimal)Config.Sensitivity;
+        #endregion
     }
+    #endregion
     
 }
