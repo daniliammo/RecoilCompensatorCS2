@@ -28,8 +28,6 @@ public struct Config
     // public const int OriginalDpi = 8000;
     // public const int UserDpi = 800;
     
-    // public static int DropC4Bind = Keys.Q;
-    
     
     private static XdgSessionType GetSessionType()
     {
