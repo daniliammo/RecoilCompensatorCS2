@@ -7,6 +7,8 @@ public struct Config
     public static readonly Color CrosshairColor = new(0, 255, 0); // rgb(0, 255, 127)
     public const bool DrawCrosshair = true;
 
+    public const string RDevInputGrabberExecutable = "/home/daniliammo/Projects/RiderProjects/RecoilCompensator/RDevInputGrabber/target/release/RDevInputGrabber";
+    
     public static readonly Vector2Int CenterOffset = new(-5, -13);
 
     public const byte FontSize = 32;

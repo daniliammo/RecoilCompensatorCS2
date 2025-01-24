@@ -41,7 +41,7 @@ public static class UserInputGrabber
         var startInfo = new ProcessStartInfo
         {
             WorkingDirectory = "/",
-            FileName = "/home/daniliammo/Projects/RustroverProjects/RustNoRecoil/target/release/RustNoRecoil",
+            FileName = Config.RDevInputGrabberExecutable,
             RedirectStandardOutput = true, // Перенаправляем стандартный вывод
             UseShellExecute = false,        // Необходимо для перенаправления вывода
             StandardOutputEncoding = Encoding.UTF8 // Устанавливаем кодировку для вывода 
