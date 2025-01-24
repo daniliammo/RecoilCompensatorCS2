@@ -174,7 +174,7 @@ public static class RecoilCompensation
         if (key == Keys.F9)
         {   // Игрок мертв. Убираем оружие
             ResetWeapons();
-            GC.Collect(-1, GCCollectionMode.Aggressive);
+            GC.Collect();
             return;
         }
         
