@@ -180,7 +180,7 @@ public struct RecoilCompensationDataBase
             Ak47CompensationData[i] /= 2.52m;
         
         for (var i = 0; i < Ak47CompensationData.Length; i++)
-            Ak47CompensationData[i] *= (decimal)Config.Sensitivity;
+            Ak47CompensationData[i] *= Config.Sensitivity;
         #endregion
     }
     #endregion
