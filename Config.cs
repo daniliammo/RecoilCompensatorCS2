@@ -23,7 +23,7 @@ public struct Config
 
     public const bool DebugMode = true;
     
-    public const float Sensitivity = 2.52f;
+    public const decimal Sensitivity = 2.52m;
 
     public const Keys Rotate180 = Keys.Alt;
     public static Keys DropC4Bind = Keys.Q;
