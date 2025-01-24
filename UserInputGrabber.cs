@@ -40,7 +40,6 @@ public static class UserInputGrabber
         // Создаем объект ProcessStartInfo
         var startInfo = new ProcessStartInfo
         {
-            WorkingDirectory = "/",
             FileName = Config.RDevInputGrabberExecutable,
             RedirectStandardOutput = true, // Перенаправляем стандартный вывод
             UseShellExecute = false,        // Необходимо для перенаправления вывода
