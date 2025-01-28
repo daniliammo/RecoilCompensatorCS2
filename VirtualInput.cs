@@ -37,18 +37,12 @@ public static class VirtualInput
     {
         if (SessionType == XdgSessionType.Wayland)
             Process.Start("/bin/ydotool", $"mousemove -x {position.X} -y {position.Y}");
-
-        // if (SessionType == XdgSessionType.X11)
-        //     Process.Start("/bin/xdotool", $"mousemove -x {position.X} -y {position.Y}");
     }
     
     public static void MouseMove(Vector2Decimal position)
     {
         if (SessionType == XdgSessionType.Wayland)
             Process.Start("/bin/ydotool", $"mousemove -x {position.X} -y {position.Y}");
-
-        // if (SessionType == XdgSessionType.X11)
-        //     Process.Start("/bin/xdotool", $"mousemove -x {position.X} -y {position.Y}");
     }
     
     public static void Stop()
